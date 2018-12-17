@@ -3,7 +3,6 @@ package com.example.myapplication
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_home.button_fragment1
 import kotlinx.android.synthetic.main.fragment_home.button_fragment2
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : androidx.fragment.app.Fragment() {
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,11 +31,9 @@ class HomeFragment : Fragment() {
 
         button_fragment1.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_myFragment1)
-//            findNavController(this).navigate(R.id.action_blankFragment_to_myFragment1)
         }
         button_fragment2.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_myFragment2)
-//            findNavController(this).navigate(R.id.action_blankFragment_to_myFragment1)
         }
     }
 

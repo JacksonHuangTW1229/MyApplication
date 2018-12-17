@@ -1,19 +1,9 @@
 package com.example.myapplication
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 open class BaseFragment: Fragment()  {
-
-//    open fun handleBackPressed(): Boolean {
-//        val fm = childFragmentManager
-//        if (fm != null && fm.backStackEntryCount > 0) {
-//            fm.popBackStackImmediate()
-//            return true
-//        }
-//
-//        return false
-//    }
 
     fun handleBackPressed(fm: FragmentManager): Boolean {
         if (fm.getFragments() != null) {
