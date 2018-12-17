@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_layout1.fragment_button1_2
 
 
@@ -28,7 +29,10 @@ class MyFragment1: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(" testtt" , " onViewCreated " + this)
-        fragment_button1_2.setOnClickListener { startFragment1_2() }
+        fragment_button1_2.setOnClickListener {
+//            startFragment1_2()
+            Navigation.findNavController(it).navigate(R.id.action_myFragment1_to_myFragment1_2)
+        }
     }
 
     override fun onDestroy() {
@@ -56,4 +60,5 @@ class MyFragment1: BaseFragment() {
             .addToBackStack("fragment1")
             .commitAllowingStateLoss()
     }
+
 }

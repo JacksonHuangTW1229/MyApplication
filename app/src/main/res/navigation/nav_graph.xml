@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/myFragment1"
+        android:name="com.example.myapplication.MyFragment1"
+        android:label="MyFragment1" >
+        <action
+            android:id="@+id/action_myFragment1_to_myFragment1_2"
+            app:destination="@id/myFragment1_2" />
+    </fragment>
+    <fragment
+        android:id="@+id/myFragment1_2"
+        android:name="com.example.myapplication.MyFragment1_2"
+        android:label="MyFragment1_2" />
+    <fragment
+        android:id="@+id/myFragment2"
+        android:name="com.example.myapplication.MyFragment2"
+        android:label="MyFragment2" >
+        <action
+            android:id="@+id/action_myFragment2_to_myFragment2_2"
+            app:destination="@id/myFragment2_2" />
+    </fragment>
+    <fragment
+        android:id="@+id/myFragment2_2"
+        android:name="com.example.myapplication.MyFragment2_2"
+        android:label="MyFragment2_2" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.myapplication.HomeFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_home"
+        >
+        <action
+            android:id="@+id/action_homeFragment_to_myFragment1"
+            app:destination="@id/myFragment1" />
+        <action
+            android:id="@+id/action_homeFragment_to_myFragment2"
+            app:destination="@id/myFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_myFragment3"
+            app:destination="@id/myFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/myFragment3"
+        android:name="com.example.myapplication.MyFragment3"
+        android:label="MyFragment3" />
+</navigation>

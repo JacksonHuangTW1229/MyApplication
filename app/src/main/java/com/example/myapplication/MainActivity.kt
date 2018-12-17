@@ -1,12 +1,19 @@
 package com.example.myapplication
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
+import kotlinx.android.synthetic.main.activity_nav.navigation
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , HomeFragment.OnFragmentInteractionListener {
+    override fun onFragmentInteraction(uri: Uri) {
+
+        Log.d("testtt" , " uri = $uri")
+    }
 
     private val baseFragments = arrayOfNulls<BaseFragment>(3)
 //    private val mList = ArrayList<BaseFragment>()
@@ -15,43 +22,55 @@ class MainActivity : AppCompatActivity() {
     private var mCurrentTab = 0
     private var selectedFragmentTag: String? = null
 
-    private val mOnNavigationItemSelectedListener =
-        BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    mCurrentTab = 0
-                    val fm = supportFragmentManager
-                    if (fm != null && fm.backStackEntryCount > 0) {
-                        val back = fm.getBackStackEntryAt(0)
-                    }
-                    startFragment1()
-                    message.setText(R.string.title_home)
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_dashboard -> {
-                    mCurrentTab = 1
-                    val fm = supportFragmentManager
-                    if (fm != null && fm.backStackEntryCount > 0) {
-                        val back = fm.getBackStackEntryAt(0)
-                    }
-
-                    startFragment2()
-                    message.setText(R.string.title_dashboard)
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.navigation_notifications -> {
-                    message.setText(R.string.title_notifications)
-                    return@OnNavigationItemSelectedListener true
-                }
-            }
-            false
-        }
+//    private val mOnNavigationItemSelectedListener =
+//        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.navigation_home -> {
+//                    mCurrentTab = 0
+////                    val fm = supportFragmentManager
+////                    if (fm != null && fm.backStackEntryCount > 0) {
+////                        val back = fm.getBackStackEntryAt(0)
+////                    }
+////                    startFragment1()
+////                    message.setText(R.string.title_home)
+//                    return@OnNavigationItemSelectedListener true
+//                }
+//                R.id.navigation_dashboard -> {
+//                    mCurrentTab = 1
+////                    val fm = supportFragmentManager
+////                    if (fm != null && fm.backStackEntryCount > 0) {
+////                        val back = fm.getBackStackEntryAt(0)
+////                    }
+////
+////                    startFragment2()
+////                    message.setText(R.string.title_dashboard)
+//                    return@OnNavigationItemSelectedListener true
+//                }
+//                R.id.navigation_notifications -> {
+////                    message.setText(R.string.title_notifications)
+//                    return@OnNavigationItemSelectedListener true
+//                }
+//            }
+//            false
+//        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        setContentView(R.layout.activity_nav)
+
+        NavigationUI.setupWithNavController(navigation,
+            Navigation.findNavController(this, R.id.nav_host_fragment))
+
+//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.container, HomeFragment.newInstance())
+//                .commitNow();
+//        }
 
 //        setSupportActionBar(toolbar)
 //        setTitle("testtt ")
@@ -127,10 +146,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         // back to tab 0
-        if (mCurrentTab != 0) {
-            navigation.selectedItemId = R.id.navigation_home
-            return
-        }
+//        if (mCurrentTab != 0) {
+//            navigation.selectedItemId = R.id.navigation_home
+//            return
+//        }
 
         super.onBackPressed()
 //        if((baseFragment!!.handleBackPressed(getSupportFragmentManager()))){
