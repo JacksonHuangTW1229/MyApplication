@@ -1,0 +1,16 @@
+.gradle
+.idea
+.safedk
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+*.iml
+/reports/
+/app/*.log
+.arcconfig
+/plugin-dex/build
+/captures
+schemasbraze
+app/schemas
