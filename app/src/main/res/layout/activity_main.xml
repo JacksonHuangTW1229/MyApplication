@@ -81,6 +81,6 @@
         android:layout_height="100dp"
         android:background="?android:attr/windowBackground"
         android:layout_gravity="bottom"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/menu_navigation" />
 
 </LinearLayout>

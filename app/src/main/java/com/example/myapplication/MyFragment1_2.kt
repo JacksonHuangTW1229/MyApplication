@@ -1,13 +1,11 @@
 package com.example.myapplication
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class MyFragment1_2: Fragment() {
+class MyFragment1_2: BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,15 +19,5 @@ class MyFragment1_2: Fragment() {
             false
         )
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d(" testtt" , " onViewCreated " + this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(" testtt" , " onDestroy " + this)
     }
 }

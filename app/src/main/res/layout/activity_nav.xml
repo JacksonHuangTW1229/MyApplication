@@ -10,6 +10,7 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="@string/navigation_test"
@@ -27,12 +28,24 @@
         app:navGraph="@navigation/nav_graph"
         />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView-->
+        <!--android:id="@+id/bottom_nav"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:background="?android:attr/windowBackground"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--app:menu="@menu/menu_navigation" />-->
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/activity_home_tabs_bottom"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="?android:attr/windowBackground"
-        android:layout_gravity="bottom"
-        app:menu="@menu/navigation" />
+        android:layout_height="56dp"
+        app:elevation="4dp"
+        app:tabGravity="fill"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabPaddingBottom="4dp"
+        app:tabPaddingEnd="2dp"
+        app:tabPaddingStart="2dp" />
 
 </LinearLayout>

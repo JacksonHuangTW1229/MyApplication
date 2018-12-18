@@ -34,11 +34,6 @@ class MyFragment1: BaseFragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(" testtt" , " onDestroy " + this)
-    }
-
 //    fun startFragment1_2() {
 //        Log.d(" testtt" , " startFragment1_2")
 //        val fm = activity?.supportFragmentManager

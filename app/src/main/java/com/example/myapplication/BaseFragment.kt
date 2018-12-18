@@ -1,5 +1,8 @@
 package com.example.myapplication
 
+import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
@@ -27,5 +30,15 @@ open class BaseFragment: Fragment()  {
             return true
         }
         return false
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d(" testtt" , " base onViewCreated " + this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(" testtt" , " base onDestroy " + this)
     }
 }

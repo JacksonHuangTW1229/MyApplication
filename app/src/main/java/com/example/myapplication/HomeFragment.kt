@@ -29,12 +29,12 @@ class HomeFragment : androidx.fragment.app.Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_fragment1.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_myFragment1)
-        }
-        button_fragment2.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_myFragment2)
-        }
+//        button_fragment1.setOnClickListener {
+//            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_myFragment1)
+//        }
+//        button_fragment2.setOnClickListener {
+//            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_myFragment2)
+//        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
