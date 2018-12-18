@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.jakewharton.butterknife'
+
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -19,6 +22,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -39,5 +46,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
 
+    implementation 'com.jakewharton:butterknife:9.0.0-rc2'
+    kapt 'com.jakewharton:butterknife-compiler:9.0.0-rc2'
 
 }
