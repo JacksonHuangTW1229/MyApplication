@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -49,15 +51,34 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     fun setupTabLayout() {
         for (i in 0 until 3) {
             val tab = activity_home_tabs_bottom.newTab()
-            val tabView = TextView(this)
-            tabView.text = "test$i"
-            tabView.gravity = Gravity.CENTER_HORIZONTAL
-            tabView.setTextColor(resources.getColor(android.R.color.black))
 
+            val tabView = HomeTabView(this)
+            tabView.setImageResource(getTabIconId(i))
+            tabView.setText(getTabTextId(i))
             tab.setCustomView(tabView)
             activity_home_tabs_bottom.addTab(tab)
         }
         activity_home_tabs_bottom.addOnTabSelectedListener(this)
+    }
+
+    @DrawableRes
+    fun getTabIconId(position : Int): Int {
+        when (position) {
+            0 -> return R.drawable.home_favorites_tab
+            1 -> return R.drawable.home_cascade_tab
+            2 -> return R.drawable.home_explore_tab
+            else -> return -1
+        }
+    }
+
+    @StringRes
+    fun getTabTextId(position : Int): Int {
+        when (position) {
+            0 -> return R.string.home_tab_favs_text
+            1 -> return R.string.home_tab_nearby_text
+            2 -> return R.string.home_tab_explore_text
+            else -> return -1
+        }
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {

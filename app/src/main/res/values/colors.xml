@@ -3,4 +3,7 @@
     <color name="colorPrimary">#FF0000</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="home_tab_text_unselected">#666666</color>
+    <color name="grindr_goldenrod">#fcb316</color>
 </resources>
