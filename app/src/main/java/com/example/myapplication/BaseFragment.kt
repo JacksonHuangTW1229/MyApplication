@@ -8,6 +8,21 @@ import androidx.fragment.app.FragmentManager
 
 open class BaseFragment: Fragment()  {
 
+
+    fun handleBackPressed(): Boolean {
+        val fm = this.requireFragmentManager()
+        if (fm.getFragments() != null) {
+            for (frag in fm.getFragments()) {
+                if (frag != null && frag.isVisible() && frag is BaseFragment) {
+                    if (frag.onBackPressed()) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
     fun handleBackPressed(fm: FragmentManager): Boolean {
         if (fm.getFragments() != null) {
             for (frag in fm.getFragments()) {

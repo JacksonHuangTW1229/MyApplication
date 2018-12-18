@@ -29,8 +29,8 @@ class MyFragment2: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(" testtt" , " onViewCreated " + this)
         fragment_button2_2.setOnClickListener {
-//            startFragment2_2()
-            Navigation.findNavController(it).navigate(R.id.action_myFragment2_to_myFragment2_2)
+            startChildFragment2_2()
+//            Navigation.findNavController(it).navigate(R.id.action_myFragment2_to_myFragment2_2)
         }
     }
 
@@ -44,8 +44,8 @@ class MyFragment2: BaseFragment() {
 //            ?.commitAllowingStateLoss()
 //    }
 
-    fun startFragment2_2() {
-        Log.d(" testtt" , " startFragment2_2")
+    fun startChildFragment2_2() {
+        Log.d(" testtt" , " startChildFragment2_2")
         val fm = childFragmentManager
         val transaction = fm.beginTransaction()
         val fragment2_2 = MyFragment2_2()
