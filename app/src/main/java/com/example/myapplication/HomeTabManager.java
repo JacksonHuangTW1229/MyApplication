@@ -12,12 +12,15 @@ package com.example.myapplication;
 //
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.StringDef;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -34,6 +37,8 @@ import static com.example.myapplication.HomeTabManager.FragmentTag.TAG_UNKNOWN;
 
 public class HomeTabManager {
     private List<String> tabs = new ArrayList<>();
+    private List<List<String>> tabChildTags = new ArrayList<>();
+    private List<Integer> tabDepth = new ArrayList<>();
 
     @StringDef
     public @interface FragmentTag {
@@ -44,6 +49,13 @@ public class HomeTabManager {
         String TAG_FAVORITES = "FAVORITES";
         String TAG_SUBSCRIPTION = "SUBSCRIPTION";
         String TAG_UNKNOWN = "UNKNOWN";
+
+        String MyFragment1 = "MyFragment1";
+        String MyFragment1_2 = "MyFragment1_2";
+        String MyFragment2 = "MyFragment2";
+        String MyFragment2_2 = "MyFragment2_2";
+        String MyFragment3 = "MyFragment3";
+        String MyFragment3_2 = "MyFragment3_2";
     }
 
 
@@ -67,17 +79,30 @@ public class HomeTabManager {
      * check what tabs we have when create()
      */
     private void initTabs() {
-        tabs.add(TAG_CASCADE);
+        addTabs(TAG_CASCADE, Arrays.asList(FragmentTag.MyFragment1, FragmentTag.MyFragment1_2));
+
 //        tabs.add(TAG_INBOX);
 //        if (isABtestingIntoTab) {
 //            tabs.add(TAG_INTO);
 //        } else if (!isABtestingExploreMove) {
-            tabs.add(TAG_EXPLORE);
+
+        addTabs(TAG_EXPLORE, Arrays.asList(FragmentTag.MyFragment2, FragmentTag.MyFragment2_2));
 //        }
-        tabs.add(TAG_FAVORITES);
+
+        addTabs(TAG_FAVORITES, Arrays.asList(FragmentTag.MyFragment3));
 //        if (hasSubscriptionTab) {
 //            tabs.add(TAG_SUBSCRIPTION);
 //        }
+
+        // record fragments by tab position
+//        list =  new ArrayList<ArrayList<BaseFragment>>(tabs.size());
+
+    }
+
+    private void addTabs(String tag, List<String> childTags) {
+        tabs.add(tag);
+        tabChildTags.add(childTags);
+        tabDepth.add(0);
     }
 
     public void onDestroy() {
@@ -164,7 +189,31 @@ public class HomeTabManager {
         isInExplore = inExplore;
     }
 
-    public void selectTab(@FragmentTag String targetTag) {
+//    private List list = new ArrayList<ArrayList<BaseFragment>>();
+
+    public int getChildDepth(int selectTabPosition) {
+       return tabDepth.get(selectTabPosition);
+    }
+
+    public void popUp(int selectTabPosition) {
+        int currentDepth = tabDepth.get(selectTabPosition);
+        int targetDepth = currentDepth - 1;
+        String tabTag = tabs.get(selectTabPosition);
+        String childTag = tabChildTags.get(selectTabPosition).get(targetDepth);
+        selectTab(tabTag, childTag);
+    }
+
+    public int getChildDepth(int selectTabPosition, String childTag) {
+        List<String> childTags = tabChildTags.get(selectTabPosition);
+        for (int i = 0 ; i < childTags.size() ; i++ ) {
+            if (childTag.equals(childTags.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void selectTab(@FragmentTag String tabTag, @FragmentTag String childTag) {
 //
 //        if (isABtestingExploreMove) {
 //            if (targetTag.equals(TAG_EXPLORE)) {
@@ -174,8 +223,22 @@ public class HomeTabManager {
 //            }
 //        }
 
+        int targetTabPosition = getTabPosition(tabTag);
+        int depth;
+        if (childTag == null) {
+            // get current depth
+            depth = tabDepth.get(targetTabPosition);
+            // first child tag
+            childTag = tabChildTags.get(targetTabPosition).get(depth);
+        } else {
+            depth = getChildDepth(targetTabPosition, childTag);
+            tabDepth.set(targetTabPosition, depth);
+        }
+
+        Log.d("testtt" , " selectTab , tab = " + tabTag + " , child = " + childTag + " , depth = " + depth);
+
         String previousFragmentTag = selectedFragmentTag;
-        if (TextUtils.equals(previousFragmentTag, targetTag)) {
+        if (TextUtils.equals(previousFragmentTag, childTag)) {
             return;
         }
         Fragment lastSelectedFragment = fm.findFragmentByTag(selectedFragmentTag);
@@ -183,31 +246,43 @@ public class HomeTabManager {
         if (lastSelectedFragment != null) {
             transaction.hide(lastSelectedFragment);
         }
-        selectedFragmentTag = targetTag;
-        Fragment fragment = fm.findFragmentByTag(targetTag);
+        selectedFragmentTag = childTag;
+        Fragment fragment = fm.findFragmentByTag(childTag);
+
         if (fragment == null) {
-            switch (targetTag) {
+            switch (childTag) {
                 case TAG_CASCADE:
                     fragment = new MyFragment1();
                     break;
-//                case TAG_INBOX:
-//                    fragment = new InboxFragment();
-//                    break;
                 case TAG_EXPLORE:
                     fragment = new MyFragment2();
                     break;
                 case TAG_FAVORITES:
                     fragment = new MyFragment3();
                     break;
-//                case TAG_SUBSCRIPTION:
-//                    fragment = storeFragmentFactory.newInstance(PurchaseConstants.PURCHASE_SOURCE_NAV_BAR);
-//                    break;
-//                case TAG_INTO:
-//                    fragment = new IntoTabFragment();
-//                    break;
+                case FragmentTag.MyFragment1:
+                    fragment = new MyFragment1();
+                    break;
+                case FragmentTag.MyFragment1_2:
+                    fragment = new MyFragment1_2();
+                    break;
+                case FragmentTag.MyFragment2:
+                    fragment = new MyFragment2();
+                    break;
+                case FragmentTag.MyFragment2_2:
+                    fragment = new MyFragment2_2();
+                    break;
+                case FragmentTag.MyFragment3:
+                    fragment = new MyFragment3();
+                    break;
             }
-            transaction.add(R.id.fragment_container, fragment, targetTag);
+
+            Log.d("testtt" , " selectTab , new fragment = " + fragment);
+            transaction.add(R.id.fragment_container, fragment, childTag);
+//            list.add(fragment);
         }
+
+        Log.d("testtt" , " selectTab , show fragment = " + fragment);
         transaction.show(fragment);
         // Note: we are purposely allowing state loss. If we lose state, it's better than crashing.
         // Articles online suggest using this method as a last resort:
@@ -217,6 +292,7 @@ public class HomeTabManager {
         // restore another fragment instead.
         transaction.commitNowAllowingStateLoss();
 //        activity.selectDrawerFilter(permissionDeniedForFragment ? TAG_UNKNOWN : targetTag);
+
     }
 
     public Fragment getSelectedFragment() {

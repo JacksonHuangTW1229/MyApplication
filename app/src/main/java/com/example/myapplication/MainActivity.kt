@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     var mNavController : NavController? = null
     lateinit var tabManager : HomeTabManager
 
+    val list = ArrayList<BaseFragment>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     }
 
     fun onBottomNavItemSelected(position: Int) {
-        tabManager.selectTab(tabManager.getHomeTabTag(position))
+        tabManager.selectTab(tabManager.getHomeTabTag(position), null)
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -72,6 +74,10 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
 
     override fun onBackPressed() {
+        val fm = supportFragmentManager
+        val backStackEntryCount = fm.backStackEntryCount
+        Log.d("testtt", " backStackEntryCount = $backStackEntryCount")
+
         val fragment = tabManager.selectedFragment
         if (fragment is BaseFragment) {
             if (fragment.handleBackPressed()) {
@@ -80,7 +86,11 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
             }
         }
         val position = activity_home_tabs_bottom.selectedTabPosition
-        if (position != tabManager.getTabPosition(TAG_CASCADE)) {
+        if (tabManager.getChildDepth(position) > 0) {
+            // try to pop up current tab
+            tabManager.popUp(position);
+            return
+        } else if (position != tabManager.getTabPosition(TAG_CASCADE)) {
             // back to cascade tab
             val selectedTabPosition = tabManager.getTabPosition(TAG_CASCADE)
             activity_home_tabs_bottom.getTabAt(selectedTabPosition)!!.select()
@@ -89,5 +99,10 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         }
 
         super.onBackPressed()
+    }
+
+    public fun startChildFragment(fragmentTag: String) {
+        val position = activity_home_tabs_bottom.selectedTabPosition
+        tabManager.selectTab(tabManager.getHomeTabTag(position), fragmentTag)
     }
 }

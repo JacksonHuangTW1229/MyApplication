@@ -29,20 +29,29 @@ class MyFragment1: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(" testtt" , " onViewCreated " + this)
         fragment_button1_2.setOnClickListener {
-            startChildFragment1_2()
+            startActivityFragment1_2()
+//            startFragment1_2()
+//            startChildFragment1_2()
 //            Navigation.findNavController(it).navigate(R.id.action_myFragment1_to_myFragment1_2)
         }
     }
 
-//    fun startFragment1_2() {
-//        Log.d(" testtt" , " startFragment1_2")
-//        val fm = activity?.supportFragmentManager
-//        val transaction = fm?.beginTransaction()
-//        val fragment1_2 = MyFragment1_2()
-//        transaction?.replace(R.id.fragment_container, fragment1_2, "fragment1_2")
-//            ?.addToBackStack("fragment1")
-//            ?.commitAllowingStateLoss()
-//    }
+    fun startActivityFragment1_2() {
+        val act = activity
+        if (act is MainActivity) {
+            act.startChildFragment(HomeTabManager.FragmentTag.MyFragment1_2)
+        }
+    }
+
+    fun startFragment1_2() {
+        Log.d(" testtt" , " startFragment1_2")
+        val fm = activity?.supportFragmentManager
+        val transaction = fm?.beginTransaction()
+        val fragment1_2 = MyFragment1_2()
+        transaction?.replace(R.id.fragment_container, fragment1_2, "fragment1_2")
+            ?.addToBackStack("fragment1")
+            ?.commitAllowingStateLoss()
+    }
 
     fun startChildFragment1_2() {
         Log.d(" testtt" , " startChildFragment1_2")
